@@ -8,12 +8,12 @@ import Main from './components/Main';
 
 export default props => (
 
-  <Router>
+  <Router navigationBarStyle={{ backgroundColor: '#115e54' }} titleStyle={{ color: '#fff' }}>
     <Stack key='root'>
-      <Scene key="formLogin" component={FormLogin} title="login" />
-      <Scene key="formRegister" component={FormRegister} title="Cadastro" />
-      <Scene key="welcome" component={Welcome} title="Boas Vindas"/>
-      <Scene key="main" component={Main} title="Principal"/>
+      <Scene key="formLogin" component={FormLogin} title="login" hideNavBar={true} />
+      <Scene key="formRegister" component={FormRegister} title="Cadastro" hideNavBar={false} />
+      <Scene key="welcome" component={Welcome} title="Boas Vindas" hideNavBar={true} />
+      <Scene key="main" component={Main} title="Principal" hideNavBar={true}/>
     </Stack>
   </Router>
 )
