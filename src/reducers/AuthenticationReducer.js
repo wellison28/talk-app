@@ -19,6 +19,9 @@ export default (state = INITIAL_STATE, action) => {
   else if(action.type === 'registration_error'){
     return { ...state, registrationError: action.payload }
   }
+  else if(action.type == 'registration_success'){
+    return { ...state, password: '', name: '' }
+  }
 
   return state;
 }
