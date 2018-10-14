@@ -1,0 +1,7 @@
+export const CHANGE_EMAIL = 'change_email'
+export const CHANGE_PASSWORD = 'change_password'
+export const CHANGE_NAME = 'change_name'
+export const REGISTRATION_SUCCESS = 'registration_success'
+export const REGISTRATION_ERROR = 'registration_error'
+export const LOGIN_SUCCESS = 'login_success'
+export const LOGIN_ERROR = 'login_error'

@@ -1,30 +1,38 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import b64 from 'base-64';
+import { 
+  CHANGE_EMAIL,
+  CHANGE_PASSWORD,
+  CHANGE_NAME,
+  REGISTRATION_SUCCESS,
+  REGISTRATION_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR 
+} from './types';
 
 export const changeEmail = (text) => {
   return {
-    type: 'change_email',
+    type: CHANGE_EMAIL,
     payload: text
   }
 }
 
 export const changePassword = (text) => {
   return {
-    type: 'change_password',
+    type: CHANGE_PASSWORD,
     payload: text
   }
 }
 
 export const changeName = (text) => {
   return {
-    type: 'change_name',
+    type: CHNAGE_NAME,
     payload: text
   }
 }
 
 export const registerUser = ({name, email, password}) => {
-  console.log('ghj')
   return dispatch => {  
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(user => {
@@ -41,15 +49,13 @@ export const registerUser = ({name, email, password}) => {
 }
 
 export const registerUserSuccess = (dispatch) => {
-  console.log('sdfsdfds')
-  dispatch ({ type: 'registration_success' })
+  dispatch ({ type: REGISTRATION_SUCCESS })
 
   Actions.welcome()
 }
 
 export const registerUserError = (error, dispatch) => {
-  console.log('sdfsdfdssdsdsd')
-  dispatch ({ type: 'registration_error', payload: error.message })
+  dispatch ({ type: REGISTRATION_ERROR, payload: error.message })
 }
 
 export const authenticateUser = ({ email, password }) => {
@@ -61,11 +67,11 @@ export const authenticateUser = ({ email, password }) => {
 } 
 
 export const loginSuccess = (dispatch) => {
-  dispatch ({ type: 'login_success' })
+  dispatch ({ type: LOGIN_SUCCESS })
 
   Actions.main()
 }
 
 export const loginError = (dispatch, error) => {
-  dispatch ({ type: 'login_error', payload: error.message })
+  dispatch ({ type: LOGIN_ERROR, payload: error.message })
 }
