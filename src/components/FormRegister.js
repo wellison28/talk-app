@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import { View, Button, TextInput, StyleSheet, ImageBackground, Text } from 'react-native';
+import { View, Button, TextInput, StyleSheet, ImageBackground, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { changeEmail, changePassword, changeName, registerUser } from '../actions/AuthenticationActions';
 
 class formRegister extends Component {
+
+  renderBtn(){
+    if(this.props.loadingRegistration){
+      return (<ActivityIndicator size="large" />)
+    }else{
+      return (<Button color="#115e54" title="Cadastrar" onPress={ () => this._registerUser() } />)
+    }
+  }
+
   _registerUser(){
     const {name, email, password} = this.props;
 
@@ -37,7 +46,7 @@ class formRegister extends Component {
             <Text style={ styles.messageError }>{ this.props.registrationError }</Text>
           </View>
           <View style={ styles.buttonContainer } >
-            <Button color="#115e54" title="Cadastrar" onPress={ () => this._registerUser() } />
+            { this.renderBtn() }
           </View> 
         </View>
       </ImageBackground>
@@ -50,7 +59,8 @@ const mapStateToProps = state => (
     email: state.AuthenticationReducer.email,
     password: state.AuthenticationReducer.password,
     name: state.AuthenticationReducer.name,
-    registrationError: state.AuthenticationReducer.registrationError
+    registrationError: state.AuthenticationReducer.registrationError,
+    loadingRegistration: state.AuthenticationReducer.loadingRegistration
   }
 )
 

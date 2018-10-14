@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight, ImageBackground } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight, ImageBackground, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { changeEmail, changePassword, authenticateUser } from '../actions/AuthenticationActions';
 
 class formLogin extends Component {
+
+  renderBtnAccess() {
+    if(this.props.loadingLogin) {
+      return (<ActivityIndicator size="large" />)
+    }else {
+      return (<Button color="#115e54" title="Acessar" onPress={() => this._authenticateUser() } />)
+    }
+  }
 
   _authenticateUser() {
     const { email, password } = this.props;
@@ -39,7 +47,7 @@ class formLogin extends Component {
             </TouchableHighlight>
           </View>
           <View style={ styles.buttonContainer } >
-            <Button color="#115e54" title="Acessar" onPress={() => this._authenticateUser() } />
+            { this.renderBtnAccess() }
           </View>        
         </View>
       </ImageBackground>
@@ -51,7 +59,8 @@ const mapStateToProps = state => (
   {
     email: state.AuthenticationReducer.email,
     password: state.AuthenticationReducer.password,
-    loginError: state.AuthenticationReducer.loginError
+    loginError: state.AuthenticationReducer.loginError,
+    loadingLogin: state.AuthenticationReducer.loadingLogin
   }
 )
 

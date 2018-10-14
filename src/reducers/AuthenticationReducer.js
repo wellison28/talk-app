@@ -5,7 +5,9 @@ import {
   REGISTRATION_SUCCESS,
   REGISTRATION_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_ERROR 
+  LOGIN_ERROR,
+  LOADING_LOGIN,
+  LOADING_REGISTRATION
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,7 +15,9 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   registrationError: '',
-  loginError: ''
+  loginError: '',
+  loadingLogin: false,
+  loadingRegistration: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,11 +31,15 @@ export default (state = INITIAL_STATE, action) => {
     case CHANGE_PASSWORD:
       return { ...state, password: action.payload }
     case REGISTRATION_ERROR:
-      return { ...state, registrationError: action.payload }
-    case REGISTRATION_SUCCESS;
+      return { ...state, registrationError: action.payload, loadingRegistration: false }
+    case REGISTRATION_SUCCESS:
       return { ...state, password: '', name: '' }
     case LOGIN_ERROR:  
-      return { ...state, loginError: action.payload }
+      return { ...state, loginError: action.payload, loadingLogin: false }
+    case LOADING_LOGIN:
+      return { ...state, loadingLogin: true }
+    case LOADING_REGISTRATION:
+      return { ...state, loadingRegistration: true }
     default:
       return state
   }

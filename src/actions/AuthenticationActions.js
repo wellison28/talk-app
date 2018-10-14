@@ -8,7 +8,9 @@ import {
   REGISTRATION_SUCCESS,
   REGISTRATION_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_ERROR 
+  LOGIN_ERROR,
+  LOADING_LOGIN,
+  LOADING_REGISTRATION
 } from './types';
 
 export const changeEmail = (text) => {
@@ -27,13 +29,15 @@ export const changePassword = (text) => {
 
 export const changeName = (text) => {
   return {
-    type: CHNAGE_NAME,
+    type: CHANGE_NAME,
     payload: text
   }
 }
 
 export const registerUser = ({name, email, password}) => {
   return dispatch => {  
+    dispatch ({ type: LOADING_REGISTRATION })
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(user => {
         let emailB64 = b64.encode(email);
@@ -60,6 +64,8 @@ export const registerUserError = (error, dispatch) => {
 
 export const authenticateUser = ({ email, password }) => {
   return dispatch => {
+    dispatch ({ type: LOADING_LOGIN })
+
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(value => loginSuccess(dispatch))
       .catch(error => loginError(dispatch, error))    
