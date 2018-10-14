@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, TextInput, StyleSheet, ImageBackground } from 'react-native';
+import { View, Button, TextInput, StyleSheet, ImageBackground, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { changeEmail, changePassword, changeName, registerUser } from '../actions/AuthenticationActions';
 
@@ -33,6 +33,8 @@ class formRegister extends Component {
                        placeholderTextColor="#fff" 
                        style={ styles.input } 
                        onChangeText={text => this.props.changePassword(text)}/>
+
+            <Text style={ styles.messageError }>{ this.props.registrationError }</Text>
           </View>
           <View style={ styles.buttonContainer } >
             <Button color="#115e54" title="Cadastrar" onPress={ () => this._registerUser() } />
@@ -47,7 +49,8 @@ const mapStateToProps = state => (
   {
     email: state.AuthenticationReducer.email,
     password: state.AuthenticationReducer.password,
-    name: state.AuthenticationReducer.name
+    name: state.AuthenticationReducer.name,
+    registrationError: state.AuthenticationReducer.registrationError
   }
 )
 
@@ -67,6 +70,10 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 20,
     height: 45,
+  },
+  messageError: {
+    fontSize: 18,
+    color: '#ff0000'
   },
   buttonContainer: {
     flex: 1

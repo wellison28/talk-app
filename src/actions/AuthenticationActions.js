@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 
 export const changeEmail = (text) => {
   return {
@@ -22,13 +23,19 @@ export const changeName = (text) => {
 }
 
 export const registerUser = ({name, email, password}) => {
-  console.log(name)
-
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(user => console.log(user))
-    .catch(error => console.log(error))
-
-  return {
-    type: 'register_user'
+  return dispatch => {  
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(user => registerUserSuccess(dispatch))
+      .catch(error => registerUserError(error, dispatch))
   }
+}
+
+export const registerUserSuccess = (dispatch) => {
+  dispatch ({ type: 'registration_success' })
+
+  Actions.welcome()
+}
+
+export const registerUserError = (error, dispatch) => {
+  dispatch ({ type: 'registration_error', payload: error.message })
 }
