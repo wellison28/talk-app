@@ -2,7 +2,8 @@ const INITIAL_STATE = {
   name: '',
   email: '',
   password: '',
-  registrationError: ''
+  registrationError: '',
+  loginError: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,8 +20,11 @@ export default (state = INITIAL_STATE, action) => {
   else if(action.type === 'registration_error'){
     return { ...state, registrationError: action.payload }
   }
-  else if(action.type == 'registration_success'){
+  else if(action.type === 'registration_success'){
     return { ...state, password: '', name: '' }
+  }
+  else if(action.type === 'login_error'){
+    return { ...state, loginError: action.payload }
   }
 
   return state;

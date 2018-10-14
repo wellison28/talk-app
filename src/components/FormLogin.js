@@ -1,46 +1,57 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight, ImageBackground } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { changeEmail, changePassword } from '../actions/AuthenticationActions';
+import { changeEmail, changePassword, authenticateUser } from '../actions/AuthenticationActions';
 
-const formLogin = props => {
-  return (
-    <ImageBackground source={require('../img/bg.png')} style={ styles.background }>
-      <View style={ styles.mainContainer }>
-        <View style={ styles.titleContainer }>
-          <Text style={ styles.title }>Whatsap Clone</Text>
+class formLogin extends Component {
+
+  _authenticateUser() {
+    const { email, password } = this.props;
+
+    this.props.authenticateUser({ email, password })
+  }
+
+  render(){
+    return (
+      <ImageBackground source={require('../img/bg.png')} style={ styles.background }>
+        <View style={ styles.mainContainer }>
+          <View style={ styles.titleContainer }>
+            <Text style={ styles.title }>Whatsap Clone</Text>
+          </View>
+          <View style={ styles.inputContainer } >
+            <TextInput value={this.props.email} 
+                       style={ styles.input } 
+                       placeholder="E-mail" 
+                       placeholderTextColor="#fff" 
+                       onChangeText={text => this.props.changeEmail(text)}/>
+
+            <TextInput secureTextEntry 
+                       value={this.props.password} 
+                       style={ styles.input } 
+                       placeholder="Senha" 
+                       placeholderTextColor="#fff" 
+                       onChangeText={text => this.props.changePassword(text)}/>
+
+            <Text style={ styles.messageError }>{ this.props.loginError }</Text>
+            <TouchableHighlight onPress={ () => Actions.formRegister() }>
+              <Text style={ styles.messageSignup }>Ainda não tem cadastro? Cadastre-se</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={ styles.buttonContainer } >
+            <Button color="#115e54" title="Acessar" onPress={() => this._authenticateUser() } />
+          </View>        
         </View>
-        <View style={ styles.inputContainer } >
-          <TextInput value={props.email} 
-                     style={ styles.input } 
-                     placeholder="E-mail" 
-                     placeholderTextColor="#fff" 
-                     onChangeText={text => props.changeEmail(text)}/>
-
-          <TextInput secureTextEntry 
-                     value={props.password} 
-                     style={ styles.input } 
-                     placeholder="Senha" 
-                     placeholderTextColor="#fff" 
-                     onChangeText={text => props.changePassword(text)}/>
-
-          <TouchableHighlight onPress={ () => Actions.formRegister() }>
-            <Text style={ styles.messageSignup }>Ainda não tem cadastro? Cadastre-se</Text>
-          </TouchableHighlight>
-        </View>
-        <View style={ styles.buttonContainer } >
-          <Button color="#115e54" title="Acessar" onPress={() => false } />
-        </View>        
-      </View>
-    </ImageBackground>
-  )
+      </ImageBackground>
+    )
+  }
 }
 
 const mapStateToProps = state => (
   {
     email: state.AuthenticationReducer.email,
-    password: state.AuthenticationReducer.password
+    password: state.AuthenticationReducer.password,
+    loginError: state.AuthenticationReducer.loginError
   }
 )
 
@@ -66,6 +77,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff"
   },
+  messageError: {
+    fontSize: 18,
+    color: '#ff0000'
+  },  
   inputContainer: {
     flex: 2
   },
@@ -78,4 +93,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, { changeEmail, changePassword })(formLogin)
+export default connect(mapStateToProps, { changeEmail, changePassword, authenticateUser })(formLogin)
