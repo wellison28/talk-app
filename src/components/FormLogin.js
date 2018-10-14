@@ -1,23 +1,34 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
-export default props => (
-  <View style={ styles.mainContainer }>
-    <View style={ styles.titleContainer }>
-      <Text style={ styles.title }>Whatsap Clone</Text>
+const formLogin = props => {
+  return (
+    <View style={ styles.mainContainer }>
+      <View style={ styles.titleContainer }>
+        <Text style={ styles.title }>Whatsap Clone</Text>
+      </View>
+      <View style={ styles.inputContainer } >
+        <TextInput value={props.email} style={ styles.input } placeholder="E-mail" />
+        <TextInput value={props.senha} style={ styles.input } placeholder="Senha" />
+        <TouchableHighlight onPress={ () => Actions.formCadastro() }>
+          <Text style={ styles.messageSignup }>Ainda não tem cadastro? Cadastre-se</Text>
+        </TouchableHighlight>
+      </View>
+      <View style={ styles.buttonContainer } >
+        <Button color="#115e54" title="Acessar" onPress={() => false } />
+      </View>        
     </View>
-    <View style={ styles.inputContainer } >
-      <TextInput style={ styles.input } placeholder="E-mail" />
-      <TextInput style={ styles.input } placeholder="Senha" />
-      <TouchableHighlight onPress={ () => Actions.formCadastro() }>
-        <Text style={ styles.messageSignup }>Ainda não tem cadastro? Cadastre-se</Text>
-      </TouchableHighlight>
-    </View>
-    <View style={ styles.buttonContainer } >
-      <Button color="#115e54" title="Acessar" onPress={() => false } />
-    </View>        
-  </View>
+  )
+}
+
+const mapStateToProps = state => (
+  {
+    email: state.AutenticacaoReducer.email,
+    senha: state.AutenticacaoReducer.senha,
+    nome: state.AutenticacaoReducer.nome
+  }
 )
 
 const styles = StyleSheet.create({
@@ -47,3 +58,5 @@ const styles = StyleSheet.create({
     flex: 2
   }
 })
+
+export default connect(mapStateToProps, null)(formLogin)
