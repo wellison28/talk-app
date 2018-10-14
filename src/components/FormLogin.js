@@ -2,19 +2,18 @@ import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { modificaEmail } from '../actions/AutenticacaoActions';
+import { changeEmail, changePassword } from '../actions/AutenticationActions';
 
 const formLogin = props => {
-  console.log(props)
   return (
     <View style={ styles.mainContainer }>
       <View style={ styles.titleContainer }>
         <Text style={ styles.title }>Whatsap Clone</Text>
       </View>
       <View style={ styles.inputContainer } >
-        <TextInput value={props.email} style={ styles.input } placeholder="E-mail" onChangeText={texto => props.modificaEmail(texto)}/>
-        <TextInput value={props.senha} style={ styles.input } placeholder="Senha" />
-        <TouchableHighlight onPress={ () => Actions.formCadastro() }>
+        <TextInput value={props.email} style={ styles.input } placeholder="E-mail" onChangeText={text => props.changeEmail(text)}/>
+        <TextInput secureTextEntry value={props.password} style={ styles.input } placeholder="Senha" onChangeText={text => props.changePassword(text)}/>
+        <TouchableHighlight onPress={ () => Actions.formRegister() }>
           <Text style={ styles.messageSignup }>Ainda não tem cadastro? Cadastre-se</Text>
         </TouchableHighlight>
       </View>
@@ -27,9 +26,8 @@ const formLogin = props => {
 
 const mapStateToProps = state => (
   {
-    email: state.AutenticacaoReducer.email,
-    senha: state.AutenticacaoReducer.senha,
-    nome: state.AutenticacaoReducer.nome
+    email: state.AutenticationReducer.email,
+    password: state.AutenticationReducer.password
   }
 )
 
@@ -61,4 +59,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, { modificaEmail })(formLogin)
+export default connect(mapStateToProps, { changeEmail, changePassword })(formLogin)
