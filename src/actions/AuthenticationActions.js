@@ -1,5 +1,6 @@
+import firebase from 'firebase';
+
 export const changeEmail = (text) => {
-  console.log(text)
   return {
     type: 'change_email',
     payload: text
@@ -17,5 +18,17 @@ export const changeName = (text) => {
   return {
     type: 'change_name',
     payload: text
+  }
+}
+
+export const registerUser = ({name, email, password}) => {
+  console.log(name)
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(user => console.log(user))
+    .catch(error => console.log(error))
+
+  return {
+    type: 'register_user'
   }
 }
