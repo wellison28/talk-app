@@ -34,5 +34,5 @@ export const registerUserSuccess = (dispatch) => {
 }
 
 export const registerUserError = (error, dispatch) => {
-  dispatch ({ type: 'error' })
+  dispatch ({ type: 'registration_error', payload: error.message })
 }
