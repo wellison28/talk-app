@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Button, TextInput, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { modificaEmail } from '../actions/AutenticacaoActions';
 
 const formCadastro = props => {
   console.log(props)
   return (
     <View style={ styles.mainContainer }>
       <View style={ styles.inputsContainer }>
-        <TextInput value={props.nome} placeholder="Nome" style={ styles.input } />
+        <TextInput value={props.nome} placeholder="Nome" style={ styles.input } onChangeText={texto => props.modificaEmail(texto)}/>
         <TextInput value={props.email} placeholder="E-mail" style={ styles.input } /> 
         <TextInput value={props.senha} placeholder="Senha" style={ styles.input } />
       </View>
@@ -44,4 +45,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, null)(formCadastro)
+export default connect(mapStateToProps, modificaEmail)(formCadastro)
