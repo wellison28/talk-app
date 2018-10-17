@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text , StatusBar, StyleSheet, Image } from 'react-native';
+import { View, Text , StatusBar, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { TabBar } from 'react-native-tab-view';
+import { Actions } from 'react-native-router-flux';
 
 export default props => (
   <View style={ styles.mainContainer }>
@@ -11,7 +12,9 @@ export default props => (
       </View>
       <View style={ styles.addContacContainer }>
         <View style={ styles.addContactImg }>
-          <Image source={ require('../img/adicionar-contato.png') }/>
+          <TouchableHighlight onPress={() => Actions.addContact()}>
+            <Image source={ require('../img/adicionar-contato.png') }/>
+          </TouchableHighlight>
         </View>
         <View style={ styles.logoutContainer }>
           <Text style={ styles.logoutText }>Sair</Text>
@@ -47,7 +50,8 @@ const styles = StyleSheet.create({
   },
   addContactImg: { 
     width: 50, 
-    justifyContent: 'center' 
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   logoutContainer: { 
     justifyContent: 'center' 
