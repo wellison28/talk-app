@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
+
 import TabBarMenu from './TabBarMenu';
-
-const Conversas = () => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
-);
-
-const Contatos = () => (
-  <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-);
+import Talkings from './Talkings';
+import Contacts from './Contacts';
 
 export default class Main extends Component {
   state = {
@@ -25,8 +20,8 @@ export default class Main extends Component {
   _renderTabBar = props => <TabBarMenu {...props} />;
 
   _renderScene = SceneMap({
-    first: Conversas,
-    second: Contatos,
+    first: Talkings,
+    second: Contacts,
   });
 
   render() {
